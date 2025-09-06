@@ -1,44 +1,28 @@
+# 抖音下载器 - 无水印批量下载工具
 
 ![douyin-downloader](https://socialify.git.ci/jiji262/douyin-downloader/image?custom_description=%E6%8A%96%E9%9F%B3%E6%89%B9%E9%87%8F%E4%B8%8B%E8%BD%BD%E5%B7%A5%E5%85%B7%EF%BC%8C%E5%8E%BB%E6%B0%B4%E5%8D%B0%EF%BC%8C%E6%94%AF%E6%8C%81%E8%A7%86%E9%A2%91%E3%80%81%E5%9B%BE%E9%9B%86%E3%80%81%E5%90%88%E9%9B%86%E3%80%81%E9%9F%B3%E4%B9%90%28%E5%8E%9F%E5%A3%B0%29%E3%80%82%0A%E5%85%8D%E8%B4%B9%EF%BC%81%E5%85%8D%E8%B4%B9%EF%BC%81%E5%85%8D%E8%B4%B9%EF%BC%81&description=1&font=Jost&forks=1&logo=https%3A%2F%2Fraw.githubusercontent.com%2Fjiji262%2Fdouyin-downloader%2Frefs%2Fheads%2Fmain%2Fimg%2Flogo.png&name=1&owner=1&pattern=Circuit+Board&pulls=1&stargazers=1&theme=Light)
 
-<a href="https://trendshift.io/repositories/13156" target="_blank"><img src="https://trendshift.io/api/badge/repositories/13156" alt="jiji262%2Fdouyin-downloader | Trendshift" style="width: 250px; height: 55px;" width="250" height="55"/></a>
+一个功能强大的抖音内容批量下载工具，支持视频、图集、音乐、直播等多种内容类型的下载。提供两个版本：V1.0（稳定版）和 V2.0（增强版）。
 
-一个功能强大的抖音内容批量下载工具，支持视频、图集、音乐、直播等多种内容类型的下载。基于最新抖音API实现，提供命令行和配置文件两种使用方式。
+## 📋 目录
 
-## ✨ 核心特性
+- [快速开始](#-快速开始)
+- [版本说明](#-版本说明)
+- [V1.0 使用指南](#-v10-使用指南)
+- [V2.0 使用指南](#-v20-使用指南)
+- [Cookie 配置工具](#-cookie-配置工具)
+- [支持的链接类型](#-支持的链接类型)
+- [常见问题](#-常见问题)
+- [更新日志](#-更新日志)
 
-### 🎯 **全面的内容支持**
-- **视频下载**：支持去水印高清视频下载
-- **图集下载**：批量下载图片集合
-- **音乐下载**：提取视频背景音乐
-- **封面&头像**：下载视频封面和作者头像
-- **元数据保存**：保存完整的作品信息（JSON格式）
+## ⚡ 快速开始
 
-### 🚀 **强大的下载能力**
-- **多线程并发**：支持多线程同时下载，提升效率
-- **断点续传**：网络中断后自动从断点继续下载
-- **智能重试**：网络错误时自动重试，采用指数退避策略
-- **去重处理**：自动跳过已下载内容，避免重复下载
-
-### 🎛️ **灵活的配置选项**
-- **多种下载模式**：支持单个作品、用户主页、合集、音乐集合
-- **时间范围过滤**：可按时间范围筛选下载内容
-- **数量限制**：可设置每种类型的下载数量上限
-- **增量更新**：支持增量下载，只下载新增内容
-
-### 🔧 **便捷的使用方式**
-- **配置文件模式**：通过YAML配置文件批量管理下载任务
-- **命令行模式**：支持命令行参数快速下载
-- **数据库支持**：可选择使用数据库记录下载历史
-
-## 🚀 快速开始
-
-### 📦 环境要求
+### 环境要求
 
 - **Python 3.9+**
 - **操作系统**：Windows、macOS、Linux
 
-### 🛠️ 安装步骤
+### 安装步骤
 
 1. **克隆项目**
 ```bash
@@ -51,44 +35,50 @@ cd douyin-downloader
 pip install -r requirements.txt
 ```
 
-3. **安装Brotli压缩支持**（必需）
+3. **配置 Cookie**（首次使用需要）
 ```bash
-pip install brotli
+# 方式1：自动获取（推荐）
+python cookie_extractor.py
+
+# 方式2：手动获取
+python get_cookies_manual.py
 ```
 
-4. **创建配置文件**
+## 📦 版本说明
+
+### V1.0 (DouYinCommand.py) - 稳定版
+- ✅ **经过验证**：稳定可靠，经过大量测试
+- ✅ **简单易用**：配置文件驱动，使用简单
+- ✅ **功能完整**：支持所有内容类型下载
+- ✅ **单个视频下载**：完全正常工作
+- ⚠️ **需要手动配置**：需要手动获取和配置 Cookie
+
+### V2.0 (downloader.py) - 增强版
+- 🚀 **自动 Cookie 管理**：支持自动获取和刷新 Cookie
+- 🚀 **统一入口**：整合所有功能到单一脚本
+- 🚀 **异步架构**：性能更优，支持并发下载
+- 🚀 **智能重试**：自动重试和错误恢复
+- 🚀 **增量下载**：支持增量更新，避免重复下载
+- ⚠️ **单个视频下载**：目前 API 返回空响应（已知问题）
+- ✅ **用户主页下载**：完全正常工作
+
+## 🎯 V1.0 使用指南
+
+### 配置文件设置
+
+1. **编辑配置文件**
 ```bash
 cp config.example.yml config.yml
+# 编辑 config.yml 文件
 ```
 
-### ⚙️ 配置说明
-
-#### 1. 获取Cookie（重要）
-
-Cookie是下载的关键，获取方法：
-
-1. 打开浏览器，访问 [抖音网页版](https://www.douyin.com)
-2. 登录你的抖音账号
-3. 按 `F12` 打开开发者工具
-4. 切换到 `Network` 标签页
-5. 刷新页面，找到任意请求
-6. 在请求头中找到 `Cookie` 字段
-7. 复制以下关键cookie值：
-   - `msToken`
-   - `ttwid`
-   - `odin_tt`
-   - `passport_csrf_token`
-   - `sid_guard`
-
-#### 2. 编辑配置文件
-
-打开 `config.yml`，修改以下配置：
-
+2. **配置示例**
 ```yaml
-# 下载链接（必填）
+# 下载链接
 link:
-  - https://www.douyin.com/user/YOUR_USER_ID  # 用户主页
-  # - https://v.douyin.com/xxxxx/             # 单个视频
+  - https://v.douyin.com/xxxxx/                    # 单个视频
+  - https://www.douyin.com/user/xxxxx              # 用户主页
+  - https://www.douyin.com/collection/xxxxx        # 合集
 
 # 保存路径
 path: ./Downloaded/
@@ -125,21 +115,190 @@ thread: 5      # 下载线程数
 database: True # 使用数据库记录
 ```
 
-### 🎯 运行程序
-
-#### 方式一：配置文件模式（推荐）
+### 运行程序
 
 ```bash
+# 使用配置文件运行
+python DouYinCommand.py
+
+# 或者使用命令行参数
+python DouYinCommand.py --cmd False
+```
+
+### 使用示例
+
+```bash
+# 下载单个视频
+# 在 config.yml 中设置 link 为单个视频链接
+python DouYinCommand.py
+
+# 下载用户主页
+# 在 config.yml 中设置 link 为用户主页链接
+python DouYinCommand.py
+
+# 下载合集
+# 在 config.yml 中设置 link 为合集链接
 python DouYinCommand.py
 ```
 
-#### 方式二：命令行模式
+## 🚀 V2.0 使用指南
+
+### 命令行使用
 
 ```bash
-python DouYinCommand.py -C True -l "抖音链接" -p "保存路径"
+# 下载单个视频（需要先配置 Cookie）
+python downloader.py -u "https://v.douyin.com/xxxxx/"
+
+# 下载用户主页（推荐）
+python downloader.py -u "https://www.douyin.com/user/xxxxx"
+
+# 自动获取 Cookie 并下载
+python downloader.py --auto-cookie -u "https://www.douyin.com/user/xxxxx"
+
+# 指定保存路径
+python downloader.py -u "链接" --path "./my_videos/"
+
+# 使用配置文件
+python downloader.py --config
 ```
 
-## 📝 支持的链接类型
+### 配置文件使用
+
+1. **创建配置文件**
+```bash
+cp config.example.yml config_simple.yml
+```
+
+2. **配置示例**
+```yaml
+# 下载链接
+link:
+  - https://www.douyin.com/user/xxxxx
+
+# 保存路径
+path: ./Downloaded/
+
+# 自动 Cookie 管理
+auto_cookie: true
+
+# 下载选项
+music: true
+cover: true
+avatar: true
+json: true
+
+# 下载模式
+mode:
+  - post
+
+# 下载数量
+number:
+  post: 10
+
+# 增量下载
+increase:
+  post: false
+
+# 数据库
+database: true
+```
+
+3. **运行程序**
+```bash
+python downloader.py --config
+```
+
+### 命令行参数
+
+```bash
+python downloader.py [选项] [链接...]
+
+选项：
+  -u, --url URL          下载链接
+  -p, --path PATH        保存路径
+  -c, --config           使用配置文件
+  --auto-cookie          自动获取 Cookie
+  --cookies COOKIES      手动指定 Cookie
+  -h, --help            显示帮助信息
+```
+
+## 🍪 Cookie 配置工具
+
+### 1. cookie_extractor.py - 自动获取工具
+
+**功能**：使用 Playwright 自动打开浏览器，自动获取 Cookie
+
+**使用方式**：
+```bash
+# 安装 Playwright
+pip install playwright
+playwright install chromium
+
+# 运行自动获取
+python cookie_extractor.py
+```
+
+**特点**：
+- ✅ 自动打开浏览器
+- ✅ 支持扫码登录
+- ✅ 自动检测登录状态
+- ✅ 自动保存到配置文件
+- ✅ 支持多种登录方式
+
+**使用步骤**：
+1. 运行 `python cookie_extractor.py`
+2. 选择提取方式（推荐选择1）
+3. 在打开的浏览器中完成登录
+4. 程序自动提取并保存 Cookie
+
+### 2. get_cookies_manual.py - 手动获取工具
+
+**功能**：通过浏览器开发者工具手动获取 Cookie
+
+**使用方式**：
+```bash
+python get_cookies_manual.py
+```
+
+**特点**：
+- ✅ 无需安装 Playwright
+- ✅ 详细的操作教程
+- ✅ 支持 Cookie 验证
+- ✅ 自动保存到配置文件
+- ✅ 支持备份和恢复
+
+**使用步骤**：
+1. 运行 `python get_cookies_manual.py`
+2. 选择"获取新的Cookie"
+3. 按照教程在浏览器中获取 Cookie
+4. 粘贴 Cookie 内容
+5. 程序自动解析并保存
+
+### Cookie 获取教程
+
+#### 方法一：浏览器开发者工具
+
+1. 打开浏览器，访问 [抖音网页版](https://www.douyin.com)
+2. 登录你的抖音账号
+3. 按 `F12` 打开开发者工具
+4. 切换到 `Network` 标签页
+5. 刷新页面，找到任意请求
+6. 在请求头中找到 `Cookie` 字段
+7. 复制以下关键 cookie 值：
+   - `msToken`
+   - `ttwid`
+   - `odin_tt`
+   - `passport_csrf_token`
+   - `sid_guard`
+
+#### 方法二：使用自动工具
+
+```bash
+# 推荐使用自动工具
+python cookie_extractor.py
+```
+
+## 📋 支持的链接类型
 
 ### 🎬 视频内容
 - **单个视频分享链接**：`https://v.douyin.com/xxxxx/`
@@ -158,324 +317,76 @@ python DouYinCommand.py -C True -l "抖音链接" -p "保存路径"
 ### 🔴 直播内容
 - **直播间**：`https://live.douyin.com/xxxxx`
 
-## 💡 使用示例
+## 🔧 常见问题
 
-### 示例1：下载单个视频
+### Q: 为什么单个视频下载失败？
+**A**: 
+- V1.0：请检查 Cookie 是否有效，确保包含必要的字段
+- V2.0：目前已知问题，API 返回空响应，建议使用用户主页下载
 
-```bash
-# 使用配置文件
-# 在config.yml中设置：
-link:
-  - https://v.douyin.com/iRGu2mBL/
+### Q: Cookie 过期怎么办？
+**A**: 
+- 使用 `python cookie_extractor.py` 重新获取
+- 或使用 `python get_cookies_manual.py` 手动获取
 
-# 运行
-python DouYinCommand.py
-```
+### Q: 下载速度慢怎么办？
+**A**: 
+- 调整 `thread` 参数增加并发数
+- 检查网络连接
+- 避免同时下载过多内容
 
-```bash
-# 使用命令行
-python DouYinCommand.py -C True -l "https://v.douyin.com/iRGu2mBL/"
-```
+### Q: 如何批量下载？
+**A**: 
+- V1.0：在 `config.yml` 中添加多个链接
+- V2.0：使用命令行传入多个链接或使用配置文件
 
-### 示例2：下载用户主页作品
+### Q: 支持哪些格式？
+**A**: 
+- 视频：MP4 格式（无水印）
+- 图片：JPG 格式
+- 音频：MP3 格式
+- 数据：JSON 格式
 
-```bash
-# 下载用户发布的前10个作品
-python DouYinCommand.py -C True \
-  -l "https://www.douyin.com/user/MS4wLjABAAAAxxxxx" \
-  -M post \
-  -n 10
-```
+## 📝 更新日志
 
-### 示例3：下载用户合集
+### V2.0 (2025-08)
+- ✅ **统一入口**：整合所有功能到 `downloader.py`
+- ✅ **自动 Cookie 管理**：支持自动获取和刷新
+- ✅ **异步架构**：性能优化，支持并发下载
+- ✅ **智能重试**：自动重试和错误恢复
+- ✅ **增量下载**：支持增量更新
+- ✅ **用户主页下载**：完全正常工作
+- ⚠️ **单个视频下载**：API 返回空响应（已知问题）
 
-```bash
-# 配置文件模式
-# config.yml设置：
-link:
-  - https://www.douyin.com/user/MS4wLjABAAAAxxxxx
-mode:
-  - mix
-number:
-  allmix: 5  # 下载5个合集
-  mix: 0     # 每个合集下载全部作品
-```
+### V1.0 (2024-12)
+- ✅ **稳定可靠**：经过大量测试验证
+- ✅ **功能完整**：支持所有内容类型
+- ✅ **单个视频下载**：完全正常工作
+- ✅ **配置文件驱动**：简单易用
+- ✅ **数据库支持**：记录下载历史
 
-### 示例4：批量下载多个链接
+## ⚖️ 法律声明
 
-```bash
-# 命令行批量下载
-python DouYinCommand.py -C True \
-  -l "https://v.douyin.com/xxxxx/" \
-  -l "https://v.douyin.com/yyyyy/" \
-  -l "https://www.douyin.com/user/zzzzz" \
-  -p "./downloads"
-```
-
-### 示例5：增量更新下载
-
-```yaml
-# config.yml配置增量下载
-increase:
-  post: True    # 开启发布作品增量下载
-  mix: True     # 开启合集增量下载
-
-# 只会下载上次下载后新增的内容
-```
-
-## 🎛️ 高级配置
-
-### 时间范围过滤
-
-```yaml
-# 只下载指定时间范围内的作品
-start_time: "2024-01-01"  # 开始时间
-end_time: "2024-12-31"    # 结束时间
-```
-
-### 文件夹结构设置
-
-```yaml
-folderstyle: True   # 每个视频单独文件夹
-# True结构：
-# user_xxx/
-#   ├── post/
-#   │   ├── 2024-01-01_视频标题1/
-#   │   │   ├── 2024-01-01_视频标题1.mp4
-#   │   │   ├── 2024-01-01_视频标题1_cover.jpeg
-#   │   │   └── 2024-01-01_视频标题1_result.json
-#   │   └── 2024-01-02_视频标题2/
-#   └── mix/
-
-folderstyle: False  # 所有文件放在同一目录
-# False结构：
-# user_xxx/
-#   ├── post/
-#   │   ├── 2024-01-01_视频标题1.mp4
-#   │   ├── 2024-01-01_视频标题1_cover.jpeg
-#   │   ├── 2024-01-02_视频标题2.mp4
-#   │   └── 2024-01-02_视频标题2_cover.jpeg
-#   └── mix/
-```
-
-### Cookie配置方式
-
-```yaml
-# 方式1：键值对形式（推荐）
-cookies:
-  msToken: YOUR_MS_TOKEN
-  ttwid: YOUR_TTWID
-  odin_tt: YOUR_ODIN_TT
-  passport_csrf_token: YOUR_CSRF_TOKEN
-  sid_guard: YOUR_SID_GUARD
-
-# 方式2：字符串形式
-# cookie: "msToken=xxx; ttwid=xxx; odin_tt=xxx; passport_csrf_token=xxx; sid_guard=xxx;"
-```
-
-## 使用截图
-
-![DouYinCommand1](img/DouYinCommand1.png)
-![DouYinCommand2](img/DouYinCommand2.png)
-![DouYinCommand download](img/DouYinCommanddownload.jpg)
-![DouYinCommand download detail](img/DouYinCommanddownloaddetail.jpg)
-
-## 🛠️ 命令行参数详解
-
-### 基础参数
-```bash
--C, --cmd              启用命令行模式
--l, --link            下载链接（可多次使用）
--p, --path            保存路径
--t, --thread          线程数（默认5）
--h, --help            显示帮助信息
-```
-
-### 下载选项
-```bash
--m, --music           下载音乐（True/False，默认True）
--c, --cover           下载封面（True/False，默认True）
--a, --avatar          下载头像（True/False，默认True）
--j, --json            保存JSON数据（True/False，默认True）
--f, --folderstyle     文件夹结构（True/False，默认True）
-```
-
-### 模式和数量
-```bash
--M, --mode            下载模式（post/like/mix/music）
--n, --number          下载数量限制
--I, --increase        增量下载（True/False）
-```
-
-### 时间过滤
-```bash
--s, --start           开始时间（YYYY-MM-DD）
--e, --end             结束时间（YYYY-MM-DD）
-```
-
-### 完整命令示例
-
-```bash
-# 下载用户主页前20个作品，包含音乐和封面
-python DouYinCommand.py -C True \
-  -l "https://www.douyin.com/user/xxxxx" \
-  -p "./downloads" \
-  -M post \
-  -n 20 \
-  -m True \
-  -c True \
-  -t 3
-```
-
-## ⚠️ 常见问题
-
-### Q1: 下载失败，提示"list index out of range"
-**A:** 这通常是数据格式问题，最新版本已修复。请确保：
-- 使用最新版本代码
-- Cookie信息正确且未过期
-- 网络连接稳定
-
-### Q2: 无法下载某些用户的喜欢列表
-**A:** 这是正常现象，因为：
-- 用户可能设置了喜欢列表为私有
-- 需要登录且有权限才能访问
-- 建议改用下载用户发布的作品
-
-### Q3: 下载速度很慢或经常中断
-**A:** 建议：
-- 减少线程数（设置为2-3）
-- 检查网络连接稳定性
-- 程序支持断点续传，中断后重新运行即可继续
-
-### Q4: Cookie如何获取？
-**A:** 详细步骤：
-1. 浏览器打开 https://www.douyin.com
-2. 登录账号
-3. F12打开开发者工具
-4. Network标签页，刷新页面
-5. 找到任意请求，查看Request Headers
-6. 复制Cookie中的关键字段
-
-### Q5: 支持哪些视频格式？
-**A:**
-- 视频：MP4格式，去水印高清
-- 图片：JPEG格式
-- 音频：MP3格式
-- 数据：JSON格式
-
-## 📋 注意事项
-
-### ⚖️ 法律声明
 - 本项目仅供**学习交流**使用
 - 请遵守相关法律法规和平台服务条款
 - 不得用于商业用途或侵犯他人权益
 - 下载内容请尊重原作者版权
 
-### 🔧 技术要求
-- Python 3.9或更高版本
-- 稳定的网络连接
-- 足够的存储空间
-- 有效的抖音账号Cookie
-
-### 💡 使用建议
-- 首次使用建议先下载少量内容测试
-- 合理设置线程数，避免对服务器造成压力
-- 定期更新Cookie信息
-- 及时更新程序版本以获得最佳体验
-
-## 🔄 更新日志
-
-### v2024.12 最新更新
-- ✅ 修复了"list index out of range"错误
-- ✅ 改进了网络连接中断的处理
-- ✅ 增强了断点续传功能
-- ✅ 添加了Brotli压缩支持
-- ✅ 优化了错误提示信息
-- ✅ 更新了API参数以适应最新接口
-
-### 主要功能状态
-- ✅ 用户主页下载：完全正常
-- ✅ 合集下载：完全正常
-- ⚠️ 喜欢列表下载：取决于用户隐私设置
-- ⚠️ 单个视频下载：部分接口限制，建议通过用户主页下载
-
-## 使用交流群
-
-![fuye](img/fuye.jpg)
-
 ## 🤝 贡献指南
 
-我们欢迎各种形式的贡献！
+欢迎提交 Issue 和 Pull Request！
 
-### 🐛 报告问题
-- 使用 [Issues](https://github.com/jiji262/douyin-downloader/issues) 报告bug
+### 报告问题
+- 使用 [Issues](https://github.com/jiji262/douyin-downloader/issues) 报告 bug
 - 请提供详细的错误信息和复现步骤
-- 包含你的系统环境和Python版本
 
-### 💡 功能建议
-- 在Issues中提出新功能建议
+### 功能建议
+- 在 Issues 中提出新功能建议
 - 详细描述功能需求和使用场景
 
-### 🔧 代码贡献
-1. Fork 本项目
-2. 创建功能分支 (`git checkout -b feature/AmazingFeature`)
-3. 提交更改 (`git commit -m 'Add some AmazingFeature'`)
-4. 推送到分支 (`git push origin feature/AmazingFeature`)
-5. 创建 Pull Request
-
-### 📖 文档改进
-- 改进README文档
-- 添加使用示例
-- 翻译文档到其他语言
-
-## 📊 Star History
-
-[![Star History Chart](https://api.star-history.com/svg?repos=jiji262/douyin-downloader&type=Date)](https://star-history.com/#jiji262/douyin-downloader&Date)
-
-## 🙏 致谢
-
-### 开源项目
-- [TikTokDownload](https://github.com/Johnserf-Seed/TikTokDownload) - 提供了宝贵的参考
-- [Rich](https://github.com/Textualize/rich) - 美观的终端输出
-- [Requests](https://github.com/psf/requests) - HTTP请求库
-
-### 技术支持
-- 本项目在开发过程中使用了AI辅助编程
-- 感谢所有提交Issue和PR的贡献者
-- 感谢社区用户的反馈和建议
-
-### 特别感谢
-- 所有Star和Fork本项目的用户
-- 在交流群中提供帮助的热心用户
-- 为项目推广做出贡献的朋友们
-
-## 📜 许可证
+## 📄 许可证
 
 本项目采用 [MIT License](LICENSE) 开源许可证。
-
-```
-MIT License
-
-Copyright (c) 2024 jiji262
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-```
 
 ---
 
@@ -488,4 +399,3 @@ SOFTWARE.
 Made with ❤️ by [jiji262](https://github.com/jiji262)
 
 </div>
-
